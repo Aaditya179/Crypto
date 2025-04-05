@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Price Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #0a0a23, #000000);
+            color: #ffffff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: #ffffff;
+            color: #000000;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #1e90ff;
+            color: #ffffff;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #0a75d1;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .positive {
+            color: #00ff00; /* Green for price increase */
+        }
+        .negative {
+            color: #ff4d4d; /* Red for price decrease */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Crypto Price Comparison</h1>
+    <div class="container">
+        <label for="crypto1">Select First Coin:</label>
+        <select id="crypto1" onchange="validateSelection()">
+            <option value="bitcoin">Bitcoin (BTC)</option>
+            <option value="ethereum">Ethereum (ETH)</option>
+            <option value="solana">Solana (SOL)</option>
+            <option value="cardano">Cardano (ADA)</option>
+            <option value="dogecoin">Dogecoin (DOGE)</option>
+            <option value="binancecoin">Binance Coin (BNB)</option>
+            <option value="ripple">XRP (XRP)</option>
+            <option value="litecoin">Litecoin (LTC)</option>
+            <option value="polkadot">Polkadot (DOT)</option>
+            <option value="chainlink">Chainlink (LINK)</option>
+        </select>
+
+        <label for="crypto2">Select Second Coin:</label>
+        <select id="crypto2" onchange="validateSelection()">
+            <option value="bitcoin">Bitcoin (BTC)</option>
+            <option value="ethereum">Ethereum (ETH)</option>
+            <option value="solana">Solana (SOL)</option>
+            <option value="cardano">Cardano (ADA)</option>
+            <option value="dogecoin">Dogecoin (DOGE)</option>
+            <option value="binancecoin">Binance Coin (BNB)</option>
+            <option value="ripple">XRP (XRP)</option>
+            <option value="litecoin">Litecoin (LTC)</option>
+            <option value="polkadot">Polkadot (DOT)</option>
+            <option value="chainlink">Chainlink (LINK)</option>
+        </select>
+
+        <button onclick="comparePrices()">Compare Prices</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        async function fetchCryptoData() {
+            try {
+                const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,cardano,dogecoin,binancecoin,ripple,litecoin,polkadot,chainlink&vs_currencies=usd&include_24hr_change=false&include_last_updated_at=false&include_1y_change=true");
+                return await response.json();
+            } catch (error) {
+                console.error("Error fetching prices:", error);
+                return {};
+            }
+        }
+
+        function validateSelection() {
+            const coin1 = document.getElementById("crypto1").value;
+            const coin2 = document.getElementById("crypto2").value;
+
+            if (coin1 === coin2) {
+                alert("Please select two different coins!");
+                document.getElementById("crypto2").selectedIndex = 0; // Reset second dropdown
+            }
+        }
+
+        async function comparePrices() {
+            const prices = await fetchCryptoData();
+
+            const coin1 = document.getElementById("crypto1").value;
+            const coin2 = document.getElementById("crypto2").value;
+
+            if (coin1 === coin2) {
+                alert("You must select two different coins!");
+                return;
+            }
+
+            const price1 = prices[coin1]?.usd || 0;
+            const price2 = prices[coin2]?.usd || 0;
+
+            const change1 = prices[coin1]?.usd_1y_change || 0;
+            const change2 = prices[coin2]?.usd_1y_change || 0;
+
+            const difference = Math.abs(price1 - price2);
+            const percentageDiff = ((difference / price1) * 100).toFixed(2);
+
+            // Determine color for 1-year change (green for increase, red for decrease)
+            const color1 = change1 >= 0 ? "positive" : "negative";
+            const color2 = change2 >= 0 ? "positive" : "negative";
+
+            document.getElementById("result").innerHTML = `
+                <p><strong>${coin1.toUpperCase()}:</strong> $${price1}</p>
+                <p><strong>${coin2.toUpperCase()}:</strong> $${price2}</p>
+                <p>🔄 Difference: $${difference} (${percentageDiff}%)</p>
+                <p><strong>${coin1.toUpperCase()} 1-Year Change:</strong> <span class="${color1}">$${change1.toFixed(2)} (${((change1 / (price1 - change1)) * 100).toFixed(2)}%)</span></p>
+                <p><strong>${coin2.toUpperCase()} 1-Year Change:</strong> <span class="${color2}">$${change2.toFixed(2)} (${((change2 / (price2 - change2)) * 100).toFixed(2)}%)</span></p>
+            `;
+        }
+    </script>
+
+</body>
+</html>

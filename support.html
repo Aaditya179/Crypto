@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Section</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #0a0a23, #000000);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .about-section {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;  /* Enables wrapping */
+            justify-content: center;
+            gap: 20px;  /* Space between cards */
+            text-align: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 30%;
+            transition: transform 0.3s ease-in-out, background 0.3s;
+        }
+        .card:hover {
+            background: linear-gradient(45deg, #1e90ff, #0a0a23);
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+        .card-content {
+            padding: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="about-heading">Why Choose Us?</h1>
+    <section class="about-section">
+        <!-- First Row -->
+        <div class="card">
+            <img src="DALL·E 2025-03-02 13.01.16 - A professional-looking man wearing a stylish coat and pant suit. He has a confident and approachable expression, neatly groomed hair, and a well-fitte.webp" alt="Crypto Security">
+            <div class="card-content">
+                <h2>Secure & Reliable</h2>
+                <p>Our platform ensures top-notch security and reliability for all transactions.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="image2.jpg" alt="Blockchain Innovation">
+            <div class="card-content">
+                <h2>Blockchain Innovation</h2>
+                <p>Stay ahead with cutting-edge blockchain technology and innovations.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="image3.jpg" alt="Fast Transactions">
+            <div class="card-content">
+                <h2>Lightning Fast</h2>
+                <p>Experience quick and seamless transactions like never before.</p>
+            </div>
+        </div>
+
+        <!-- Second Row (New Cards) -->
+        <div class="card">
+            <img src="image4.jpg" alt="User-Friendly Interface">
+            <div class="card-content">
+                <h2>User-Friendly</h2>
+                <p>Navigate our platform with ease and efficiency.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="image5.jpg" alt="Low Fees">
+            <div class="card-content">
+                <h2>Low Fees</h2>
+                <p>Enjoy minimal transaction fees for maximum savings.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="image6.jpg" alt="24/7 Support">
+            <div class="card-content">
+                <h2>24/7 Support</h2>
+                <p>We’re here to help anytime, anywhere.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

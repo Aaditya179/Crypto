@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Quiz</title>
+    <link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #1e1e2f;
+  color: white;
+}
+
+.quiz-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #29293d;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* From Uiverse.io by adamgiebl */ 
+button {
+  font-size: 18px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  width: 250px;
+  height: 80px;
+  cursor: pointer;
+  will-change: box-shadow,transform;
+  background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
+  box-shadow: 0px 0.01em 0.01em rgb(45 35 66 / 40%), 0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%), inset 0px -0.01em 0px rgb(58 65 111 / 50%);
+  padding: 0 2em;
+  border-radius: 0.3em;
+  color: #fff;
+  height: 2.6em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+button:hover {
+  box-shadow: 0px 0.1em 0.2em rgb(45 35 66 / 40%), 0px 0.4em 0.7em -0.1em rgb(45 35 66 / 30%), inset 0px -0.1em 0px #3c4fe0;
+  transform: translateY(-0.1em);
+}
+
+button:active {
+  box-shadow: inset 0px 0.1em 0.6em #3c4fe0;
+  transform: translateY(0em);
+}
+
+button:hover {
+  background: #e68900;
+}
+
+.option {
+  display: block;
+  background: #44445a;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #55556d;
+}
+</style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Crypto Quiz</h1>
+        <div id="question-container"></div>
+        <button id="next-btn">Next</button>
+        <p id="score">Score: 0</p>
+    </div>
+    <div class="container"></div>
+    <script>const quizData = [
+        {
+            question: "What is the maximum supply of Bitcoin?",
+            options: ["21 million", "100 million", "1 billion", "Unlimited"],
+            answer: "21 million"
+        },
+        {
+            question: "Who created Ethereum?",
+            options: ["Vitalik Buterin", "Satoshi Nakamoto", "Elon Musk", "Charles Hoskinson"],
+            answer: "Vitalik Buterin"
+        },
+        {
+            question: "Which crypto is known as 'digital gold'?",
+            options: ["Ethereum", "Ripple", "Bitcoin", "Litecoin"],
+            answer: "Bitcoin"
+        },
+        {
+            question: "What does DeFi stand for?",
+            options: ["Decentralized Finance", "Digital Federation", "Deflationary Funds", "Distributed Finance"],
+            answer: "Decentralized Finance"
+        },
+        {
+            question: "Which consensus mechanism does Bitcoin use?",
+            options: ["Proof of Stake", "Delegated Proof of Stake", "Proof of Work", "Byzantine Fault Tolerance"],
+            answer: "Proof of Work"
+        },
+        {
+            question: "What is the smallest unit of Bitcoin called?",
+            options: ["Ether", "Wei", "Satoshi", "Gwei"],
+            answer: "Satoshi"
+        },
+        {
+            question: "Which crypto project introduced the concept of smart contracts?",
+            options: ["Bitcoin", "Ethereum", "Ripple", "Cardano"],
+            answer: "Ethereum"
+        },
+        {
+            question: "What is the purpose of a crypto wallet?",
+            options: ["To store private keys", "To mine Bitcoin", "To generate smart contracts", "To trade on exchanges"],
+            answer: "To store private keys"
+        },
+        {
+            question: "What year was Bitcoin launched?",
+            options: ["2008", "2009", "2011", "2013"],
+            answer: "2009"
+        },
+        {
+            question: "Which crypto is often referred to as 'Ethereum killer'?",
+            options: ["Bitcoin", "Polkadot", "Cardano", "Dogecoin"],
+            answer: "Cardano"
+        }
+    ];
+    
+    let currentQuestion = 0;
+    let score = 0;
+    
+    const questionContainer = document.getElementById("question-container");
+    const nextButton = document.getElementById("next-btn");
+    const scoreDisplay = document.getElementById("score");
+    
+    function loadQuestion() {
+        questionContainer.innerHTML = "";
+        nextButton.style.display = "none"; // Hide "Next" button initially
+    
+        let questionData = quizData[currentQuestion];
+    
+        let questionElement = document.createElement("h2");
+        questionElement.innerText = `Q${currentQuestion + 1}) ${questionData.question}`;
+        questionContainer.appendChild(questionElement);
+    
+        questionData.options.forEach(option => {
+            let button = document.createElement("button");
+            button.classList.add("option");
+            button.innerText = option;
+            button.addEventListener("click", () => checkAnswer(button, option));
+            questionContainer.appendChild(button);
+        });
+    }
+    
+    function checkAnswer(selectedButton, selectedOption) {
+        let correctAnswer = quizData[currentQuestion].answer;
+        let allButtons = document.querySelectorAll(".option");
+    
+        // Disable all options after selection
+        allButtons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.innerText === correctAnswer) {
+                btn.style.backgroundColor = "green"; // Correct answer
+            } else if (btn === selectedButton) {
+                btn.style.backgroundColor = "red"; // Wrong answer
+            }
+        });
+    
+        if (selectedOption === correctAnswer) {
+            score++;
+        }
+    
+        scoreDisplay.innerText = `Score: ${score}`;
+        nextButton.style.display = "block"; // Show "Next" button
+    }
+    
+    nextButton.addEventListener("click", () => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            questionContainer.innerHTML = `<h2>Quiz Completed!</h2><p>Your final score is: ${score} / 10</p>`;
+            nextButton.style.display = "none";
+        }
+    });
+    
+    loadQuestion();
+    </script>
+</body>
+</html>

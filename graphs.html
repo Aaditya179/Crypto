@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Market Trends</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1 class="page-title">Crypto Market Trends (Live Updates)</h1>
+
+    <label for="cryptoSelect" class="dropdown-label">Select a cryptocurrency:</label>
+    <select id="cryptoSelect">
+        <option value="btc">Bitcoin (BTC)</option>
+        <option value="eth">Ethereum (ETH)</option>
+        <option value="bnb">Binance Coin (BNB)</option>
+        <option value="sol">Solana (SOL)</option>
+        <option value="ada">Cardano (ADA)</option>
+        <option value="xrp">XRP (XRP)</option>
+        <option value="doge">Dogecoin (DOGE)</option>
+        <option value="dot">Polkadot (DOT)</option>
+        <option value="avax">Avalanche (AVAX)</option>
+        <option value="link">Chainlink (LINK)</option>
+        <option value="ltc">Litecoin (LTC)</option>
+    </select>
+
+    <div class="graph-container">
+        <canvas id="cryptoChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
